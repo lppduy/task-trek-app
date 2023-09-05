@@ -9,7 +9,7 @@
 
 .task_text {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 15px;
 }
 
@@ -27,13 +27,19 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3 ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .task_delete:hover {
-  background: #ebebeb;
+  background-color: #ebebeb;
 }
 
 .delete_icon {
   width: 20px;
+  opacity: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.task_delete:hover .delete_icon {
+  opacity: 80%;
 }

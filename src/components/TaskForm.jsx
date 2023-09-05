@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import Task from './Task';
+import Task from './Tag';
 import './TaskForm.css';
 
-const TaskForm = () => {
+const TaskForm = ({ setTasks }) => {
   const [taskData, setTaskData] = useState({
     task: '',
     status: 'todo',
     tags: [],
   });
+
+  const checkTag = tag => {
+    return taskData.tags.some(item => item === tag);
+  };
 
   const selectTag = tag => {
     if (taskData.tags.some(item => item === tag)) {
@@ -22,8 +26,6 @@ const TaskForm = () => {
     }
   };
 
-  console.log(taskData.tags);
-
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -35,7 +37,20 @@ const TaskForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log(taskData);
+    setTasks(prev => {
+      return [...prev, taskData];
+    });
+
+    setTaskData({
+      task: '',
+      status: 'todo',
+      tags: [],
+    });
   };
+  // when we select a tag then hit enter that won't work
+  // -> we have to click the button
+  // || select the input again and hit the enter
+  // BUG how can we fix that?
 
   return (
     <header className="app_header">
@@ -43,6 +58,7 @@ const TaskForm = () => {
         <input
           type="text"
           name="task"
+          value={taskData.task}
           className="task_input"
           placeholder="Enter your task"
           onChange={handleChange}
@@ -52,23 +68,28 @@ const TaskForm = () => {
             <Task
               tagName="HTML"
               selectTag={selectTag}
+              selected={checkTag('HTML')}
             />
             <Task
               tagName="CSS"
               selectTag={selectTag}
+              selected={checkTag('CSS')}
             />
             <Task
               tagName="JavaScript"
               selectTag={selectTag}
+              selected={checkTag('JavaScript')}
             />
             <Task
               tagName="React"
               selectTag={selectTag}
+              selected={checkTag('React')}
             />
           </div>
           <div>
             <select
               name="status"
+              value={taskData.status}
               className="task_status"
               onChange={handleChange}
             >
